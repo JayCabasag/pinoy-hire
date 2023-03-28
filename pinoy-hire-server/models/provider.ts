@@ -1,0 +1,1 @@
+export type Provider = 'google' | 'username/password' | 'email/password' | ''
