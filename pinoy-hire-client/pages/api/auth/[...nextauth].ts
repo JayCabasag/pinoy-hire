@@ -40,7 +40,6 @@ export const authOptions = {
         const res = await axios.post(`${SERVER}/user/login`, payload, { headers } )
         const data = res?.data
         const user = {  id: data?.data?.sub, email: email, name: data?.data?.name}
-        console.log(data)
         return user
       }
     })
