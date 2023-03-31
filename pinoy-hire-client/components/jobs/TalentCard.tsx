@@ -32,7 +32,7 @@ export default function TalentCard() {
                 </svg>
               </div>
             </div>
-            <div className="text-sm text-gray-500 dark:text-gray-400">Joined in August 2014</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">Joined in August 2014</div>
         </div>
     </div>
   )

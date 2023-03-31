@@ -3,5 +3,6 @@ export interface User {
     email: string,
     name: string,
     iat: number,
-    type: string
+    type: string,
+    image: string
 }

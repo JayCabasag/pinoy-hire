@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
+import ProfileCard from './ProfileCard'
 
 export default function ExtendedNavbar() {
 
@@ -294,10 +295,11 @@ export default function ExtendedNavbar() {
                 </li>
             </ul>
             <ul className="flex flex-col mt-0 text-sm font-medium md:flex-row md:space-x-8 md:mt-0 justify-self-end">
-              <li>
+              <li className='flex gap-4'>
                 <button onClick={hasUserLoggedIn  ? () => signOut() : () => signIn()} id="login" className="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
                   { hasUserLoggedIn  ? 'Logout' : 'Login'} 
                 </button>
+                { hasUserLoggedIn  && <ProfileCard />} 
               </li>
             </ul>
         </div>

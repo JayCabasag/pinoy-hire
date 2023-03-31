@@ -31,7 +31,7 @@ const loginUser = (req, res) => {
         });
     }
     (0, users_services_1.loginUserService)(body, (error, response) => {
-        var _a, _b;
+        var _a, _b, _c;
         if (error) {
             return res.status(401).json({
                 message: error
@@ -41,6 +41,7 @@ const loginUser = (req, res) => {
             sub: response.id,
             email: (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.email,
             name: (_b = response === null || response === void 0 ? void 0 : response.data) === null || _b === void 0 ? void 0 : _b.name,
+            image: (_c = response === null || response === void 0 ? void 0 : response.data) === null || _c === void 0 ? void 0 : _c.image,
             iat: Math.floor(Date.now() / 1000),
             type: 'user'
         };

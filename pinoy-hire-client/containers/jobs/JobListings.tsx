@@ -33,6 +33,7 @@ export default function JobListings() {
   const jobsList = jobsResponse?.data?.data as JobType[]  ?? [] as JobType[]
   return (
     <div className='w-full md:w-3/5 flex flex-col gap-2'>
+      <h1 className="mb-3 text-lg font-bold leading-none tracking-tight text-gray-900 md:text-lg lg:text-xl dark:text-white mt-2"><mark className="px-3 py-2 text-white bg-orange-400 rounded dark:bg-blue-500">Popular</mark> <span className='text-orange-400'> job listing</span></h1>
       {jobsList?.map((job: JobType, index: number) => {
         return <JobsCard job={job} key={index}/>
       })}

@@ -44,6 +44,7 @@ export const loginUser = (req: Request, res: Response) => {
         sub: response.id,
         email: response?.data?.email,
         name: response?.data?.name,
+        image: response?.data?.image,
         iat: Math.floor(Date.now() / 1000),
         type: 'user'
     }
