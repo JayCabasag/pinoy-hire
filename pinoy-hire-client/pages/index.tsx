@@ -15,7 +15,6 @@ export default function Home(props: Props) {
     router.replace(`${props.redirect}`)
   }, [props.redirect, router])
   
-
   return (
     <>
       <Head>

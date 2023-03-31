@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export default function ExtendedNavbar() {
-  
+
+  const { data: session } = useSession()
+  const hasUserLoggedIn = !!session
+
   const [showDevelopersMegaMenu, setShowDevelopersMegaMenu] = useState(false)
   const [showArtistsMegaMenu, setShowArtistsMegaMenu] = useState(false)
   const [showUIUXMegaMenu, setShowUIUXMegaMenu] = useState(false)
@@ -26,8 +30,8 @@ export default function ExtendedNavbar() {
 
   return (
     <nav className="bg-white border-gray-200 px-2 md:px-4 dark:bg-gray-900 mb-2">
-    <div className="container flex flex-wrap items-center justify-between mx-auto">
-        <div id="mega-menu-icons" className="items-center justify-between show w-full md:flex md:w-auto md:order-1">
+    <div className="container flex flex-wrap items-center justify-between mx-auto py-4">
+        <div id="mega-menu-icons" className="items-center justify-between show w-full md:flex md:order-1">
             <ul className="flex flex-col mt-0 text-sm font-medium md:flex-row md:space-x-8 md:mt-0">
                 <li>
                     <button onClick={handleToggleDeveloperMegaMenu} id="mega-menu-icons-dropdown-button" data-dropdown-toggle="mega-menu-icons-dropdown" className="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
@@ -288,6 +292,13 @@ export default function ExtendedNavbar() {
                         </div>
                     </div>
                 </li>
+            </ul>
+            <ul className="flex flex-col mt-0 text-sm font-medium md:flex-row md:space-x-8 md:mt-0 justify-self-end">
+              <li>
+                <button onClick={hasUserLoggedIn  ? () => signOut() : () => signIn()} id="login" className="flex items-center justify-between w-full py-2 pl-3 pr-4 font-medium text-gray-700 border-b border-gray-100 md:w-auto hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
+                  { hasUserLoggedIn  ? 'Logout' : 'Login'} 
+                </button>
+              </li>
             </ul>
         </div>
     </div>

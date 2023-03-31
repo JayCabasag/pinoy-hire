@@ -13,6 +13,9 @@ module.exports = {
       fontFamily: {
         sans: ['Spectral Extra Light', 'sans-serif'],
       },
+      colors: {
+        primary: '#1d4ed8'
+      }
     },
   },
   plugins: [],

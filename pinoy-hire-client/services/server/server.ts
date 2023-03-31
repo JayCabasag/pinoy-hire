@@ -1,0 +1,1 @@
+export const SERVER = 'https://pinoy-hire-web-api.onrender.com/api/v1'

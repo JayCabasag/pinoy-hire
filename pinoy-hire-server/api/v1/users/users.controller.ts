@@ -43,6 +43,7 @@ export const loginUser = (req: Request, res: Response) => {
     const userPayload: User = {
         sub: response.id,
         email: response.email,
+        name: response.name,
         iat: Math.floor(Date.now() / 1000),
         type: 'user'
     }

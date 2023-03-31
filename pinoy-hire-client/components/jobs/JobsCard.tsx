@@ -1,8 +1,17 @@
+import { JobType } from '@/utils/types'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-export default function JobsCard() {
+export default function JobsCard({ job }:{job: JobType}) {
+  const title = (job?.title as string) ?? ''
+  const budget = ((job?.budget as number) ?? 0).toLocaleString()
+  const totalApplicants = (job?.applicants as number) ?? 0
+  const description = (job?.description as string) ?? ''
+  const status = (job?.status as string) ?? ''
+  const comments = (job?.comments as number[]) ?? []
+  const totalComments = comments.length
+
   return (
     <article className="container rounded-xl border-2 border-gray-100 bg-white">
     <div className="flex items-start gap-4 p-2 sm:p-2 lg:p-4">
@@ -19,16 +28,14 @@ export default function JobsCard() {
         <div>
         <h3 className="font-medium sm:text-md">
             <Link href='/jobs/2' className="hover:underline text-md">
-             1 month contract as React JS Dev
+             {title}
             </Link>
         </h3>
-        <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">React JS</span>
+        <span className="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Budget: ({budget})</span>
         <span className="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Node JS</span>
 
         <p className="line-clamp-2 text-xs text-gray-700">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-            accusantium temporibus iure delectus ut totam natus nesciunt ex?
-            Ducimus, enim.
+            {description}
         </p>
 
         <div className="mt-2 sm:flex sm:items-center sm:gap-2">
@@ -48,7 +55,7 @@ export default function JobsCard() {
                 />
             </svg>
 
-            <p className="text-xs">14 comments</p>
+            <p className="text-xs">{totalComments} comments</p>
             </div>
 
             <span className="hidden sm:block" aria-hidden="true">&middot;</span>
@@ -78,7 +85,7 @@ export default function JobsCard() {
             <path id="primary" d="M13,15H11V13h2ZM16,4a1,1,0,0,0-1-1H9A1,1,0,0,0,8,4V7h8Zm5,16V8a1,1,0,0,0-1-1H4A1,1,0,0,0,3,8V20a1,1,0,0,0,1,1H20A1,1,0,0,0,21,20Z" fill='none' stroke='#fff' strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5}></path><path id="primary-2" data-name="primary" d="M11,14H8.64A4,4,0,0,1,5,11.58L3.18,7.43" fill='none' stroke='#fff' strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5}></path><path id="primary-3" data-name="primary" d="M20.82,7.43,19,11.58A4,4,0,0,1,15.36,14H13" fill='none' stroke='#fff' strokeLinecap='round' strokeLinejoin='round' strokeWidth={1.5}></path>
         </svg>
 
-        <span className="text-[10px] font-medium sm:text-xs">1 Total Applicants</span>
+        <span className="text-[10px] font-medium sm:text-xs">{totalApplicants} Total Applicants</span>
         </strong>
       </div>
     
@@ -101,7 +108,7 @@ export default function JobsCard() {
             />
         </svg>
 
-        <span className="text-[10px] font-medium sm:text-xs">Looking!</span>
+        <span className="text-[10px] font-medium sm:text-xs capitalize">{status}</span>
         </strong>
       </div>
     </div>
