@@ -60,10 +60,6 @@ export const authOptions = {
     },
     async signIn({ user, account} : { user: User, account: any }) {
       const provider = account?.provider
-      console.log({
-        ...user,
-        provider
-      })
       return true
     },
     async signOut({ session } : { session: Session }){
