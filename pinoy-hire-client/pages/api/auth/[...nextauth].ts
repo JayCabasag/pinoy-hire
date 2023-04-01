@@ -1,15 +1,10 @@
 import { SERVER } from "@/services/server/server";
 import axios from "axios";
-import NextAuth from "next-auth";
+import NextAuth, { Account, Session, User } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import TwitterProvider from "next-auth/providers/twitter";
-import CredentialsProvider, { CredentialsConfig } from "next-auth/providers/credentials";
-
-interface CustomCredentialsConfig extends CredentialsConfig {
-  email: string,
-  password: string,
-  provider: string
-}
+import CredentialsProvider from "next-auth/providers/credentials";
+import { JWT } from "next-auth/jwt";
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -39,12 +34,29 @@ export const authOptions = {
         const headers = { "Content-Type": "application/json" }
         const res = await axios.post(`${SERVER}/user/login`, payload, { headers } )
         const data = res?.data
-        const user = {  id: data?.data?.sub, email: email, name: data?.data?.name}
+        const user = {
+          id: data?.data?.sub,
+          email: email,
+          name: data?.data?.name,
+          image: data?.data?.image,
+          type:  data?.data?.type
+        }
         return user
       }
     })
   ],
-  secret: process.env.NEXTAUTH_SECRET
+  callbacks: {
+    async session({ session, user, token } : { session: Session, user: User, token: JWT } ) {
+      return session // The return type will match the one returned in `useSession()`
+    },
+    async signIn({ user, account} : { user: User, account: any }) {
+      return true
+    },
+    async signOut({ session } : { session: Session }){
+      return session
+    }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
 };
 
 export default NextAuth(authOptions)

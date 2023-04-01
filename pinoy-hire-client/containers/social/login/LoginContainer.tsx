@@ -8,9 +8,24 @@ import React, { useState } from 'react'
 export default function LoginContainer() {
 
   const router = useRouter()
+  const [hasErrorSigningIn, setHasErrorSigningIn] = useState(false)
+  const [signingInErrorMessage, setSigningInErrorMessage] = useState('')
+  const [isLoadingSigningIn, setIsLoadingSigningIn] = useState(false)
+
+  const setErrorSignIn = (status: boolean, message: string) => {
+    setHasErrorSigningIn(status)
+    setSigningInErrorMessage(message)
+  }
+
+  const resetSignInStatus = () => {
+    setHasErrorSigningIn(false)
+    setSigningInErrorMessage('')
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    resetSignInStatus()
+    setIsLoadingSigningIn(true)
     const loginForm = event?.target as HTMLFormElement
     const emailElement = loginForm?.elements?.namedItem('email') as HTMLInputElement
     const passwordElement = loginForm?.elements?.namedItem('password') as HTMLInputElement
@@ -23,20 +38,28 @@ export default function LoginContainer() {
       email: emailValue,
       password: passwordValue,
       provider: 'email/password',
-      callbackUrl: 'localhost:3000/jobs'
+      user: {
+        type: 'user'
+      }
     })
     
-    if(status?.status === 200) {
+    const isOk = status?.status === 200
+    if(isOk) {
       router.reload()
     }
+
+    if(!isOk){
+      setErrorSignIn(true, `That didn't load right. Please try again`)
+    }
+    setIsLoadingSigningIn(false)
   }
 
   const handleGoogleSignIn = () => {
-    signIn('google', { callbackUrl: 'localhost:3000/jobs' })
+    signIn('google')
   }
 
   const handleTwitterSignIn = () => {
-    signIn('twitter', { callbackUrl: 'localhost:3000/jobs' })
+    signIn('twitter')
   }
 
 
@@ -136,7 +159,24 @@ export default function LoginContainer() {
                 </div>
                 <a href="#!" className='text-sm'>Forgot password?</a>
             </div>
-
+            {hasErrorSigningIn && (
+               <div className="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+               <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
+               <span className="sr-only">Info</span>
+               <div>
+                 <span className="font-medium">{signingInErrorMessage}</span>
+               </div>
+             </div>
+            )}
+            {isLoadingSigningIn && !hasErrorSigningIn && (
+               <div className="flex p-4 mb-4 text-sm text-blue-800 border border-blue-300 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400 dark:border-blue-800" role="alert">
+               <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
+               <span className="sr-only">Info</span>
+               <div>
+                 <span className="font-medium">Please wait...</span>
+               </div>
+             </div>
+            )}
             <div className="text-center lg:text-left">
                 <button
                 type="submit"
