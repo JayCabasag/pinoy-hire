@@ -63,7 +63,7 @@ export default function Navbar() {
             </div>
             <input type="text" id="search-navbar" className="block w-full p-2 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search..." />
         </div>
-        <div className={`items-center justify-between ${showMobileMenu ? 'hidden' : 'block'} w-full md:flex md:w-auto md:order-1`} id="navbar-search">
+        <div className={`items-center justify-between ${showMobileMenu ? 'block' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-search">
         <ul className="flex flex-col p-0 mt-2 rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
             <Link href="/jobs" className="block py-2 pl-3 pr-4 text-md text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white" aria-current="page">Jobs</Link>
