@@ -14,7 +14,7 @@ module.exports = {
         sans: ['Spectral Extra Light', 'sans-serif'],
       },
       colors: {
-        primary: '#1d4ed8'
+        primary: '#fb923c'
       }
     },
   },
